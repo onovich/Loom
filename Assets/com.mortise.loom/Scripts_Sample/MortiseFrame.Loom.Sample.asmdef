@@ -1,0 +1,16 @@
+{
+    "name": "MortiseFrame.Loom.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:204832dbd85e3473d9879601e51fc006"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

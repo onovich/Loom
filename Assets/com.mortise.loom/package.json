@@ -1,0 +1,19 @@
+{
+    "name": "com.mortise.loom",
+    "version": "0.0.0",
+    "unity": "2019.4",
+    "author": {
+        "name": "onovich",
+        "email": "onovich1110@gmail.com"
+    },
+    "displayName": "MortiseFrame.Loom",
+    "description": "A Game UI Scaffold.",
+    "documentationURL": "https://github.com/onovich/Loom",
+    "hideInEditor": false,
+    "category": "UI",
+    "keywords": [
+        "MortiseFrame",
+        "ui"
+    ],
+    "unityRelease": "16f1"
+}
