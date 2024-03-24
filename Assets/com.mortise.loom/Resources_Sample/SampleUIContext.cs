@@ -1,26 +1,25 @@
 using System;
 using System.Threading.Tasks;
+using MortiseFrame.Loom;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
-namespace MortiseFrame.Loom {
+namespace MortiseFrame.Loom.Sample {
 
-    public class UICore {
+    public class SampleUIContext {
 
-        UIContext ctx;
+        UICore uiCore;
+        SampleUIEventCenter evt;
+        public SampleUIEventCenter Evt => evt;
 
-        public UICore(Canvas mainCanvas) {
-            ctx = new UIContext();
-            ctx.Inject(mainCanvas);
+        public SampleUIContext(Canvas mainCanvas) {
+            uiCore = new UICore(mainCanvas);
+            evt = new SampleUIEventCenter();
         }
 
         // Load
         public async Task LoadAssets() {
             try {
-                var list = await Addressables.LoadAssetsAsync<GameObject>("UI", null).Task;
-                foreach (var prefab in list) {
-                    ctx.Asset_AddPrefab(prefab.name, prefab);
-                }
+                await uiCore.LoadAssets();
             } catch (Exception e) {
                 LLog.Log(e.ToString());
             }
@@ -28,38 +27,34 @@ namespace MortiseFrame.Loom {
 
         // Tick
         public void LateTick(float dt) {
-
+            uiCore.LateTick(dt);
         }
 
         #region Unique Panel
         public T UniquePanel_Open<T>() where T : MonoBehaviour {
-            return UIFactory.UniquePanel_Open<T>(ctx);
+            return uiCore.UniquePanel_Open<T>();
         }
 
         public T UniquePanel_Get<T>() where T : MonoBehaviour {
-            return ctx.UniquePanel_Get<T>();
+            return uiCore.UniquePanel_Get<T>();
         }
 
         public bool UniquePanel_TryGet<T>(out T panel) where T : MonoBehaviour {
-            panel = ctx.UniquePanel_Get<T>();
-            if (panel == null) {
-                return false;
-            }
-            return true;
+            return uiCore.UniquePanel_TryGet<T>(out panel);
         }
 
         public void UniquePanel_Close<T>() where T : MonoBehaviour {
-            UIFactory.UniquePanel_Close<T>(ctx);
+            uiCore.UniquePanel_Close<T>();
         }
         #endregion
 
         #region  Multiple Panel
         public T MultiplePanel_Open<T>() where T : MonoBehaviour {
-            return UIFactory.MultiplePanel_Open<T>(ctx);
+            return uiCore.MultiplePanel_Open<T>();
         }
 
         public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
-            UIFactory.MultiplePanel_Close<T>(ctx, panelInstance);
+            uiCore.MultiplePanel_Close<T>(panelInstance);
         }
         #endregion
 

@@ -6,8 +6,10 @@ namespace MortiseFrame.Loom {
     public class UIContext {
 
         // Canvas
-        public Canvas canvas;
-        public Transform worldFakeCanvas;
+        Canvas canvas;
+        public Canvas Canvas => canvas;
+
+        Transform worldFakeCanvas;
 
         // Prefab
         public Dictionary<string, GameObject> prefabDict;
@@ -32,6 +34,10 @@ namespace MortiseFrame.Loom {
             tempList = new List<MonoBehaviour>();
             intTempList = new List<int>();
             idRecord = 0;
+        }
+
+        public void Inject(Canvas mainCanvas) {
+            this.canvas = mainCanvas;
         }
 
         public void Asset_AddPrefab(string name, GameObject prefab) {

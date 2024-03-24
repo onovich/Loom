@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Packed Assets
+  m_EditorClassIdentifier: 
+  m_GroupName: Packed Assets
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6ea714e43f923436cae750d1aa1fb722
+  m_SerializeEntries:
+  - m_GUID: 221cc1e2683ea4133a2ff5a85ae35e67
+    m_Address: Panel_Timer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9fafc5fad58d84ac79fa6ef173956fc6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 807fb773fc3c24b0eba8d72b214cfa40, type: 2}
+    - {fileID: 11400000, guid: 4f2600acc193746ff87790ff42bc4dd6, type: 2}

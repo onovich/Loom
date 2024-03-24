@@ -9,7 +9,7 @@ namespace MortiseFrame.Loom {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
-            var panel = GameObject.Instantiate(prefab, ctx.canvas.transform).GetComponent<T>();
+            var panel = GameObject.Instantiate(prefab, ctx.Canvas.transform).GetComponent<T>();
             ctx.UniquePanel_Add(name, panel);
             return panel;
         }
@@ -40,7 +40,7 @@ namespace MortiseFrame.Loom {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
-            var panel = GameObject.Instantiate(prefab, ctx.canvas.transform).GetComponent<T>();
+            var panel = GameObject.Instantiate(prefab, ctx.Canvas.transform).GetComponent<T>();
             ctx.MultiplePanel_Add(name, panel);
             return panel;
         }
