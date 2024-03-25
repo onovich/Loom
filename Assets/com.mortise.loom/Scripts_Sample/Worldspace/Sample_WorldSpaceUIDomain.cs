@@ -43,7 +43,7 @@ namespace MortiseFrame.Loom.Sample {
 
         static void TimerPanel_RefreshMultiPos(Sample_MultipleTimerPanel panel, int index) {
             var oldPos = panel.transform.localPosition;
-            var newPos = new UnityEngine.Vector2(oldPos.x, -70 * index + 70);
+            var newPos = new UnityEngine.Vector2(oldPos.x, -60 * index + 60);
             panel.SetPos(newPos);
         }
 
