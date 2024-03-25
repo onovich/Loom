@@ -7,12 +7,12 @@ namespace MortiseFrame.Loom.Sample {
 
     public class Sample_OverlayUIContext {
 
-        OverlayUICore uiCore;
+        UICore uiCore;
         Sample_OverlayUIEventCenter evt;
         public Sample_OverlayUIEventCenter Evt => evt;
 
         public Sample_OverlayUIContext(Canvas mainCanvas) {
-            uiCore = new OverlayUICore(mainCanvas);
+            uiCore = new UICore(mainCanvas);
             evt = new Sample_OverlayUIEventCenter();
         }
 

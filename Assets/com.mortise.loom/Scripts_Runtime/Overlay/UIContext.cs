@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public class OverlayUIContext {
+    public class UIContext {
 
         // Canvas
-        Canvas canvas;
-        public Canvas Canvas => canvas;
+        Canvas overlayCanvas;
+        public Canvas OverlayCanvas => overlayCanvas;
 
-        Transform worldFakeCanvas;
+        // World Fake Canvas
+        Transform worldSpaceFakeCanvas;
 
         // Prefab
         public Dictionary<string, GameObject> prefabDict;
@@ -27,7 +28,10 @@ namespace MortiseFrame.Loom {
         public Dictionary<MonoBehaviour, int> idDict;
         public int idRecord;
 
-        public OverlayUIContext() {
+        // Const
+        public string AssetsLabel;
+
+        public UIContext() {
             prefabDict = new Dictionary<string, GameObject>();
             openedUniqueDict = new Dictionary<string, MonoBehaviour>();
             openedMultiDict = new Dictionary<string, Dictionary<int, MonoBehaviour>>();
@@ -37,8 +41,12 @@ namespace MortiseFrame.Loom {
             idRecord = 0;
         }
 
-        public void Inject(Canvas mainCanvas) {
-            this.canvas = mainCanvas;
+        public void SetOverlayCanvas(Canvas mainCanvas) {
+            this.overlayCanvas = mainCanvas;
+        }
+
+        public void SetWorldSpaceFakeCanvas(Transform worldFakeCanvas) {
+            this.worldSpaceFakeCanvas = worldFakeCanvas;
         }
 
         public void Asset_AddPrefab(string name, GameObject prefab) {

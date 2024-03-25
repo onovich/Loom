@@ -5,19 +5,22 @@ using UnityEngine.AddressableAssets;
 
 namespace MortiseFrame.Loom {
 
-    public class OverlayUICore {
+    public class UICore {
 
-        OverlayUIContext ctx;
+        UIContext ctx;
 
-        public OverlayUICore(Canvas mainCanvas) {
-            ctx = new OverlayUIContext();
-            ctx.Inject(mainCanvas);
+        public UICore(Canvas mainCanvas, Transform worldSpaceFakeCanvas = null, string assetsLabel = "UI") {
+            ctx = new UIContext();
+            ctx.SetOverlayCanvas(mainCanvas);
+            ctx.SetWorldSpaceFakeCanvas(worldSpaceFakeCanvas);
+            ctx.AssetsLabel = assetsLabel;
         }
 
         // Load
         public async Task LoadAssets() {
             try {
-                var list = await Addressables.LoadAssetsAsync<GameObject>("UI", null).Task;
+                var lable = ctx.AssetsLabel;
+                var list = await Addressables.LoadAssetsAsync<GameObject>(lable, null).Task;
                 foreach (var prefab in list) {
                     ctx.Asset_AddPrefab(prefab.name, prefab);
                 }
@@ -38,7 +41,7 @@ namespace MortiseFrame.Loom {
             if (panel != null) {
                 return panel as T;
             }
-            return OverlayUIFactory.UniquePanel_Open<T>(ctx);
+            return UIFactory.UniquePanel_Open<T>(ctx);
         }
 
         public T UniquePanel_Get<T>() where T : MonoBehaviour {
@@ -54,17 +57,17 @@ namespace MortiseFrame.Loom {
         }
 
         public void UniquePanel_Close<T>() where T : MonoBehaviour {
-            OverlayUIFactory.UniquePanel_TryClose<T>(ctx);
+            UIFactory.UniquePanel_TryClose<T>(ctx);
         }
         #endregion
 
         #region  Multiple Panel
         public T MultiplePanel_Open<T>() where T : MonoBehaviour {
-            return OverlayUIFactory.MultiplePanel_Open<T>(ctx);
+            return UIFactory.MultiplePanel_Open<T>(ctx);
         }
 
         public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
-            OverlayUIFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
+            UIFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
         }
 
         public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
@@ -80,7 +83,7 @@ namespace MortiseFrame.Loom {
         }
 
         public void MultiplePanel_CloseGroup<T>() where T : MonoBehaviour {
-            OverlayUIFactory.MultiplePanel_CloseGroup<T>(ctx);
+            UIFactory.MultiplePanel_CloseGroup<T>(ctx);
         }
         #endregion
 
