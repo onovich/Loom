@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public class UIContext {
+    public class OverlayUIContext {
 
         // Canvas
         Canvas canvas;
@@ -26,7 +26,7 @@ namespace MortiseFrame.Loom {
         public Dictionary<MonoBehaviour, int> idDict;
         public int idRecord;
 
-        public UIContext() {
+        public OverlayUIContext() {
             prefabDict = new Dictionary<string, GameObject>();
             openedUniqueDict = new Dictionary<string, MonoBehaviour>();
             openedMultiDict = new Dictionary<string, Dictionary<int, MonoBehaviour>>();

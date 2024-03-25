@@ -1163,7 +1163,7 @@ GameObject:
   - component: {fileID: 2601797791778846833}
   - component: {fileID: 2495306956442738323}
   m_Layer: 5
-  m_Name: OverlayNavigationPanel
+  m_Name: Sample_OverlayNavigationPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

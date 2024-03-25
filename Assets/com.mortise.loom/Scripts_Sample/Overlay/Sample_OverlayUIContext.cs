@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class OverlayUIContext {
+    public class Sample_OverlayUIContext {
 
-        UICore uiCore;
-        OverlayUIEventCenter evt;
-        public OverlayUIEventCenter Evt => evt;
+        OverlayUICore uiCore;
+        Sample_OverlayUIEventCenter evt;
+        public Sample_OverlayUIEventCenter Evt => evt;
 
-        public OverlayUIContext(Canvas mainCanvas) {
-            uiCore = new UICore(mainCanvas);
-            evt = new OverlayUIEventCenter();
+        public Sample_OverlayUIContext(Canvas mainCanvas) {
+            uiCore = new OverlayUICore(mainCanvas);
+            evt = new Sample_OverlayUIEventCenter();
         }
 
         // Load

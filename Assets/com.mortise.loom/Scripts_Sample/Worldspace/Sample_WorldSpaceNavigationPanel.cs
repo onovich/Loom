@@ -4,7 +4,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class WorldSpaceNavigationPanel : MonoBehaviour {
+    public class Sample_WorldSpaceNavigationPanel : MonoBehaviour {
 
         [SerializeField] Button btn_unique_open;
         [SerializeField] Button btn_multi_open;

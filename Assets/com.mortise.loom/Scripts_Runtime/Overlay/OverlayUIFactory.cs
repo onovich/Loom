@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public static class UIFactory {
+    public static class OverlayUIFactory {
 
         #region Unique Panel
-        public static T UniquePanel_Open<T>(UIContext ctx) where T : MonoBehaviour {
+        public static T UniquePanel_Open<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
@@ -14,7 +14,7 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static void UniquePanel_Close<T>(UIContext ctx) where T : MonoBehaviour {
+        public static void UniquePanel_Close<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             string name = typeof(T).Name;
             bool has = ctx.UniquePanel_TryGet(name, out var panel);
             if (!has) {
@@ -25,7 +25,7 @@ namespace MortiseFrame.Loom {
             GameObject.Destroy(panel.gameObject);
         }
 
-        static GameObject GetPrefab(UIContext ctx, string name) {
+        static GameObject GetPrefab(OverlayUIContext ctx, string name) {
             bool has = ctx.prefabDict.TryGetValue(name, out var prefab);
             if (!has) {
                 LLog.Error($"UIFactory.GetPrefab<{name}>: UI Prefab not found");
@@ -36,7 +36,7 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public static T MultiplePanel_Open<T>(UIContext ctx) where T : MonoBehaviour {
+        public static T MultiplePanel_Open<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
@@ -45,7 +45,7 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static void MultiplePanel_Close<T>(UIContext ctx, T panelInstance) where T : MonoBehaviour {
+        public static void MultiplePanel_Close<T>(OverlayUIContext ctx, T panelInstance) where T : MonoBehaviour {
             var has = (ctx.idDict.TryGetValue(panelInstance, out var id));
             if (!has) {
                 LLog.Warning($"UIFactory.MultiplePanel_Close: Panel or ID not found for {typeof(T).Name}");
@@ -58,7 +58,7 @@ namespace MortiseFrame.Loom {
             GameObject.Destroy(panelInstance.gameObject);
         }
 
-        public static void MultiplePanel_CloseGroup<T>(UIContext ctx) where T : MonoBehaviour {
+        public static void MultiplePanel_CloseGroup<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             var group = ctx.MultiplePanel_GetGroup<T>();
             foreach (var panel in group) {
                 GameObject.Destroy(panel);

@@ -2,7 +2,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class OverlayUIEventCenter {
+    public class Sample_OverlayUIEventCenter {
 
         // Timer
         public Action Timer_OnResetClickHandle;

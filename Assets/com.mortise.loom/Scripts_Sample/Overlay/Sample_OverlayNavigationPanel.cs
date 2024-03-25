@@ -4,7 +4,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class OverlayNavigationPanel : MonoBehaviour {
+    public class Sample_OverlayNavigationPanel : MonoBehaviour {
 
         [SerializeField] Button btn_unique_open;
         [SerializeField] Button btn_multi_open;

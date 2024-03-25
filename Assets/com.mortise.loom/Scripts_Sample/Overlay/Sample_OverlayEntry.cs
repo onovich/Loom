@@ -4,14 +4,14 @@ using MortiseFrame.Loom;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class OverlayEntry : MonoBehaviour {
+    public class Sample_OverlayEntry : MonoBehaviour {
 
         // Main Context
         bool isLoaded;
 
         // Sub Context
-        OverlayUIContext uiCtx;
-        OverlayLogicContext logicCtx;
+        Sample_OverlayUIContext uiCtx;
+        Sample_OverlayLogicContext logicCtx;
 
         // Main
         public void Start() {
@@ -20,8 +20,8 @@ namespace MortiseFrame.Loom.Sample {
             LLog.Warning = Debug.LogWarning;
 
             Canvas mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
-            uiCtx = new OverlayUIContext(mainCanvas);
-            logicCtx = new OverlayLogicContext();
+            uiCtx = new Sample_OverlayUIContext(mainCanvas);
+            logicCtx = new Sample_OverlayLogicContext();
 
             logicCtx.Inject(uiCtx);
 
@@ -34,7 +34,7 @@ namespace MortiseFrame.Loom.Sample {
                 isLoaded = true;
                 LLog.Log("Load Finished");
                 Binding();
-                OverlayLogicDomain.Logic_EnterGame(logicCtx);
+                Sample_OverlayLogicDomain.Logic_EnterGame(logicCtx);
             };
             action.Invoke();
         }
@@ -42,10 +42,10 @@ namespace MortiseFrame.Loom.Sample {
         void Binding() {
             var evt = uiCtx.Evt;
             evt.Timer_OnResetClickHandle = () => {
-                OverlayLogicDomain.OnResetTimer(logicCtx);
+                Sample_OverlayLogicDomain.OnResetTimer(logicCtx);
             };
             evt.Timer_OnCloseClickHandle = () => {
-                OverlayLogicDomain.OnCloseTimer(logicCtx);
+                Sample_OverlayLogicDomain.OnCloseTimer(logicCtx);
             };
         }
 
@@ -54,14 +54,14 @@ namespace MortiseFrame.Loom.Sample {
                 return;
             }
             var dt = Time.deltaTime;
-            OverlayLogicDomain.Logic_Tick(logicCtx, dt);
+            Sample_OverlayLogicDomain.Logic_Tick(logicCtx, dt);
         }
 
         void LateUpdate() {
             if (!isLoaded) {
                 return;
             }
-            OverlayUIDomain.TimerPanel_TryRefresh(uiCtx, logicCtx.Timer);
+            Sample_OverlayUIDomain.TimerPanel_TryRefresh(uiCtx, logicCtx.Timer);
         }
 
     }
