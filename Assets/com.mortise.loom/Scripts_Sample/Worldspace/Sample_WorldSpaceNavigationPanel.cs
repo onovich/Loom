@@ -4,7 +4,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class Sample_WorldSpaceNavigationPanel : MonoBehaviour {
+    public class Sample_WorldSpaceNavigationPanel : MonoBehaviour, IPanel {
 
         [SerializeField] Button btn_unique_open;
         [SerializeField] Button btn_multi_open;
@@ -18,6 +18,22 @@ namespace MortiseFrame.Loom.Sample {
         public Action OnClickCloseUniqueHandle;
         public Action OnClickCloseMultiGroupHandle;
         public Action OnCLickAllHandle;
+
+        int id;
+        int IPanel.ID => id;
+        bool IPanel.IsUnique => true;
+        GameObject IPanel.GO => gameObject;
+
+        bool inWorldSpace;
+        public bool InWorldSpace => inWorldSpace;
+
+        public void SetInWorldSpace(bool value) {
+            inWorldSpace = value;
+        }
+
+        public void SetID(int id) {
+            this.id = id;
+        }
 
         public void Ctor() {
             btn_unique_open.onClick.AddListener(() => {

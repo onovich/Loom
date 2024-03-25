@@ -35,20 +35,20 @@ namespace MortiseFrame.Loom {
         }
 
         #region Unique Panel
-        public T UniquePanel_Open<T>() where T : MonoBehaviour {
+        public T UniquePanel_Open<T>() where T : IPanel {
             var name = typeof(T).Name;
             var has = ctx.UniquePanel_TryGet(name, out var panel);
             if (panel != null) {
-                return panel as T;
+                return (T)panel;
             }
             return UIFactory.UniquePanel_Open<T>(ctx);
         }
 
-        public T UniquePanel_Get<T>() where T : MonoBehaviour {
+        public T UniquePanel_Get<T>() where T : IPanel {
             return ctx.UniquePanel_Get<T>();
         }
 
-        public bool UniquePanel_TryGet<T>(out T panel) where T : MonoBehaviour {
+        public bool UniquePanel_TryGet<T>(out T panel) where T : IPanel {
             panel = ctx.UniquePanel_Get<T>();
             if (panel == null) {
                 return false;
@@ -56,33 +56,29 @@ namespace MortiseFrame.Loom {
             return true;
         }
 
-        public void UniquePanel_Close<T>() where T : MonoBehaviour {
+        public void UniquePanel_Close<T>() where T : IPanel {
             UIFactory.UniquePanel_TryClose<T>(ctx);
         }
         #endregion
 
         #region  Multiple Panel
-        public T MultiplePanel_Open<T>() where T : MonoBehaviour {
+        public T MultiplePanel_Open<T>() where T : IPanel {
             return UIFactory.MultiplePanel_Open<T>(ctx);
         }
 
-        public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
+        public void MultiplePanel_Close<T>(T panelInstance) where T : IPanel {
             UIFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
         }
 
-        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
             ctx.MultiplePanel_GroupForEach<T>(action);
         }
 
-        public int MultiplePanel_GroupCount<T>() where T : MonoBehaviour {
+        public int MultiplePanel_GroupCount<T>() where T : IPanel {
             return ctx.MultiplePanel_GroupCount<T>();
         }
 
-        public int MultiplePanel_GetID<T>(T panel) where T : MonoBehaviour {
-            return ctx.MultiplePanel_GetID(panel);
-        }
-
-        public void MultiplePanel_CloseGroup<T>() where T : MonoBehaviour {
+        public void MultiplePanel_CloseGroup<T>() where T : IPanel {
             UIFactory.MultiplePanel_CloseGroup<T>(ctx);
         }
         #endregion

@@ -17,15 +17,15 @@ namespace MortiseFrame.Loom {
         public Dictionary<string, GameObject> prefabDict;
 
         // Repo
-        public Dictionary<string, MonoBehaviour> openedUniqueDict;
-        public Dictionary<string/*name*/, Dictionary<int/*id*/, MonoBehaviour/*panel*/>> openedMultiDict;
+        public Dictionary<string, IPanel> openedUniqueDict;
+        public Dictionary<string/*name*/, Dictionary<int/*id*/, IPanel/*panel*/>> openedMultiDict;
 
         // Temp
-        List<MonoBehaviour> tempList;
+        List<IPanel> tempList;
         List<int> intTempList;
 
         // ID Dict
-        public Dictionary<MonoBehaviour, int> idDict;
+        public Dictionary<IPanel, int> idDict;
         public int idRecord;
 
         // Const
@@ -33,12 +33,16 @@ namespace MortiseFrame.Loom {
 
         public UIContext() {
             prefabDict = new Dictionary<string, GameObject>();
-            openedUniqueDict = new Dictionary<string, MonoBehaviour>();
-            openedMultiDict = new Dictionary<string, Dictionary<int, MonoBehaviour>>();
-            idDict = new Dictionary<MonoBehaviour, int>();
-            tempList = new List<MonoBehaviour>();
+            openedUniqueDict = new Dictionary<string, IPanel>();
+            openedMultiDict = new Dictionary<string, Dictionary<int, IPanel>>();
+            idDict = new Dictionary<IPanel, int>();
+            tempList = new List<IPanel>();
             intTempList = new List<int>();
             idRecord = 0;
+        }
+
+        public int PickID() {
+            return ++idRecord;
         }
 
         public void SetOverlayCanvas(Canvas mainCanvas) {
@@ -54,7 +58,7 @@ namespace MortiseFrame.Loom {
         }
 
         #region Unique Panel
-        public void UniquePanel_Add(string name, MonoBehaviour com) {
+        public void UniquePanel_Add(string name, IPanel com) {
             openedUniqueDict.Add(name, com);
         }
 
@@ -62,11 +66,11 @@ namespace MortiseFrame.Loom {
             openedUniqueDict.Remove(name);
         }
 
-        public bool UniquePanel_TryGet(string name, out MonoBehaviour com) {
+        public bool UniquePanel_TryGet(string name, out IPanel com) {
             return openedUniqueDict.TryGetValue(name, out com);
         }
 
-        public T UniquePanel_Get<T>() where T : MonoBehaviour {
+        public T UniquePanel_Get<T>() where T : IPanel {
             string name = typeof(T).Name;
             bool has = openedUniqueDict.TryGetValue(name, out var com);
             if (!has) {
@@ -78,25 +82,24 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public void MultiplePanel_Add(string name, MonoBehaviour com) {
-            var id = ++idRecord;
+        public void MultiplePanel_Add(string name, int id, IPanel com) {
             idDict.Add(com, id);
 
             if (!openedMultiDict.ContainsKey(name)) {
-                openedMultiDict[name] = new Dictionary<int, MonoBehaviour>();
+                openedMultiDict[name] = new Dictionary<int, IPanel>();
             }
             openedMultiDict[name].Add(id, com);
         }
 
-        public T MultiplePanel_Get<T>(int id) where T : MonoBehaviour {
+        public T MultiplePanel_Get<T>(int id) where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels) && panels.TryGetValue(id, out var panel)) {
-                return panel as T;
+                return (T)panel;
             }
-            return null;
+            return default(T);
         }
 
-        public int MultiplePanel_GroupCount<T>() where T : MonoBehaviour {
+        public int MultiplePanel_GroupCount<T>() where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels)) {
                 return panels.Count;
@@ -104,14 +107,7 @@ namespace MortiseFrame.Loom {
             return 0;
         }
 
-        public int MultiplePanel_GetID<T>(T panel) where T : MonoBehaviour {
-            if (idDict.TryGetValue(panel, out var id)) {
-                return id;
-            }
-            return -1;
-        }
-
-        public List<MonoBehaviour> MultiplePanel_GetGroup<T>() where T : MonoBehaviour {
+        public List<IPanel> MultiplePanel_GetGroup<T>() where T : IPanel {
             string name = typeof(T).Name;
             tempList.Clear();
             var has = (openedMultiDict.TryGetValue(name, out var panels));
@@ -125,7 +121,7 @@ namespace MortiseFrame.Loom {
             return tempList;
         }
 
-        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
             string name = typeof(T).Name;
             var has = (openedMultiDict.TryGetValue(name, out var panels));
             if (!has) {
@@ -133,11 +129,11 @@ namespace MortiseFrame.Loom {
             }
             foreach (var kv in panels) {
                 var panel = kv.Value;
-                action(panel as T);
+                action((T)panel);
             }
         }
 
-        public void MultiplePanel_Remove<T>(int id) where T : MonoBehaviour {
+        public void MultiplePanel_Remove<T>(int id) where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels)) {
                 idDict.Remove(panels[id]);
@@ -148,7 +144,7 @@ namespace MortiseFrame.Loom {
             }
         }
 
-        public void MultiplePanel_RemoveGroup<T>() where T : MonoBehaviour {
+        public void MultiplePanel_RemoveGroup<T>() where T : IPanel {
             string name = typeof(T).Name;
             var has = openedMultiDict.TryGetValue(name, out var panels);
             if (!has) {

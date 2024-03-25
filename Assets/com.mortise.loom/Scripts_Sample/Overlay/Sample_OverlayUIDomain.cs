@@ -28,7 +28,7 @@ namespace MortiseFrame.Loom.Sample {
             panel.Ctor();
             panel.OnClickResetHandle = ctx.Evt.Timer_OnResetClickHandle;
             panel.OnClickCloseHandle = ctx.Evt.Timer_OnCloseClickMultiHandle;
-            var id = ctx.MultiplePanel_GetID(panel);
+            var id = panel.ID;
             Timer_RefreshMultiGroupPos(ctx);
         }
 
