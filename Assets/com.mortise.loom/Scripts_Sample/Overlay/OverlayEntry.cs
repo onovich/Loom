@@ -4,14 +4,14 @@ using MortiseFrame.Loom;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class SampleEntry : MonoBehaviour {
+    public class OverlayEntry : MonoBehaviour {
 
         // Main Context
         bool isLoaded;
 
         // Sub Context
-        SampleUIContext uiCtx;
-        SampleLogicContext logicCtx;
+        OverlayUIContext uiCtx;
+        OverlayLogicContext logicCtx;
 
         // Main
         public void Start() {
@@ -20,8 +20,8 @@ namespace MortiseFrame.Loom.Sample {
             LLog.Warning = Debug.LogWarning;
 
             Canvas mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
-            uiCtx = new SampleUIContext(mainCanvas);
-            logicCtx = new SampleLogicContext();
+            uiCtx = new OverlayUIContext(mainCanvas);
+            logicCtx = new OverlayLogicContext();
 
             logicCtx.Inject(uiCtx);
 
@@ -34,7 +34,7 @@ namespace MortiseFrame.Loom.Sample {
                 isLoaded = true;
                 LLog.Log("Load Finished");
                 Binding();
-                SampleLogicDomain.Logic_EnterGame(logicCtx);
+                OverlayLogicDomain.Logic_EnterGame(logicCtx);
             };
             action.Invoke();
         }
@@ -42,10 +42,10 @@ namespace MortiseFrame.Loom.Sample {
         void Binding() {
             var evt = uiCtx.Evt;
             evt.Timer_OnResetClickHandle = () => {
-                SampleLogicDomain.OnResetTimer(logicCtx);
+                OverlayLogicDomain.OnResetTimer(logicCtx);
             };
             evt.Timer_OnCloseClickHandle = () => {
-                SampleLogicDomain.OnCloseTimer(logicCtx);
+                OverlayLogicDomain.OnCloseTimer(logicCtx);
             };
         }
 
@@ -54,14 +54,14 @@ namespace MortiseFrame.Loom.Sample {
                 return;
             }
             var dt = Time.deltaTime;
-            SampleLogicDomain.Logic_Tick(logicCtx, dt);
+            OverlayLogicDomain.Logic_Tick(logicCtx, dt);
         }
 
         void LateUpdate() {
             if (!isLoaded) {
                 return;
             }
-            SampleUIDomain.TimerPanel_TryRefresh(uiCtx, logicCtx.Timer);
+            OverlayUIDomain.TimerPanel_TryRefresh(uiCtx, logicCtx.Timer);
         }
 
     }

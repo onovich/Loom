@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 6811967180003159801}
   - component: {fileID: 4079255595742316360}
   m_Layer: 5
-  m_Name: Panel_Timer
+  m_Name: TimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

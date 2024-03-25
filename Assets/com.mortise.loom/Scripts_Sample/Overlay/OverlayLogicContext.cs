@@ -1,14 +1,14 @@
 namespace MortiseFrame.Loom.Sample {
 
-    public class SampleLogicContext {
+    public class OverlayLogicContext {
 
         float timer;
         public float Timer => timer;
 
-        SampleUIContext uiContext;
-        public SampleUIContext UIContext => uiContext;
+        OverlayUIContext uiContext;
+        public OverlayUIContext UIContext => uiContext;
 
-        public void Inject(SampleUIContext uiContext) {
+        public void Inject(OverlayUIContext uiContext) {
             this.uiContext = uiContext;
         }
 

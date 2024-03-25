@@ -10,15 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Packed Assets
+  m_Name: UI
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: UI
   m_Data:
     m_SerializedData: []
   m_GUID: 6ea714e43f923436cae750d1aa1fb722
   m_SerializeEntries:
   - m_GUID: 221cc1e2683ea4133a2ff5a85ae35e67
-    m_Address: Panel_Timer
+    m_Address: TimerPanel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5a53dcf5100a49f682575b336cd477f
+    m_Address: OverlayNavigationPanel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d662a26970774378b2b792dd7175c7c
+    m_Address: WorldSpaceNavigationPanel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
