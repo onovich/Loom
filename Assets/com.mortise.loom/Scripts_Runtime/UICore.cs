@@ -61,6 +61,10 @@ namespace MortiseFrame.Loom {
         public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
             UIFactory.MultiplePanel_Close<T>(ctx, panelInstance);
         }
+
+        public void MultiplePanel_CloseGroup<T>() where T : MonoBehaviour {
+            UIFactory.MultiplePanel_CloseGroup<T>(ctx);
+        }
         #endregion
 
     }
