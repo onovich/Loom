@@ -10,6 +10,10 @@ namespace MortiseFrame.Loom {
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
             var panel = GameObject.Instantiate(prefab).GetComponent<T>();
+            if (panel == null) {
+                LLog.Error($"UIFactory.UniquePanel_Open<{name}>: Panel is null");
+                return default;
+            }
             var inWorldSpace = panel.InWorldSpace;
             var root = inWorldSpace ? ctx.WorldSpaceFakeCanvas : ctx.OverlayCanvas.transform;
             panel.GO.transform.SetParent(root, false);

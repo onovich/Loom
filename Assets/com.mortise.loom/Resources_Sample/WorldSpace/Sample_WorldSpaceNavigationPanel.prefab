@@ -725,6 +725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2601797791778846833}
   - component: {fileID: 2495306956442738323}
+  - component: {fileID: 5268779827622863708}
   m_Layer: 5
   m_Name: Sample_WorldSpaceNavigationPanel
   m_TagString: Untagged
@@ -760,6 +761,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6719226483397810618}
   m_CullTransparentMesh: 1
+--- !u!114 &5268779827622863708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719226483397810618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa17345d4a2004171a066712fd627759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn_unique_open: {fileID: 224836353204562018}
+  btn_multi_open: {fileID: 3779198437935860129}
+  btn_unique_close: {fileID: 4912831786736839716}
+  btn_multi_closeGroup: {fileID: 8219623412629039504}
+  btn_closeAll: {fileID: 2104173109014296645}
 --- !u!1 &7517837459190377478
 GameObject:
   m_ObjectHideFlags: 0
