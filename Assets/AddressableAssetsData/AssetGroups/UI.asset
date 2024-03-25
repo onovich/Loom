@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 6ea714e43f923436cae750d1aa1fb722
   m_SerializeEntries:
-  - m_GUID: 221cc1e2683ea4133a2ff5a85ae35e67
-    m_Address: Sample_TimerPanel
+  - m_GUID: 65334086ccf41443ebfc09cbe57fe098
+    m_Address: Sample_UniqueTimerPanel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
