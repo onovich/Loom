@@ -12,6 +12,7 @@ namespace MortiseFrame.Loom {
 
         // World Fake Canvas
         Transform worldSpaceFakeCanvas;
+        public Transform WorldSpaceFakeCanvas => worldSpaceFakeCanvas;
 
         // Prefab
         public Dictionary<string, GameObject> prefabDict;
@@ -112,7 +113,7 @@ namespace MortiseFrame.Loom {
             tempList.Clear();
             var has = (openedMultiDict.TryGetValue(name, out var panels));
             if (!has) {
-                LLog.Log($"Multiple Panel Get Group Error: Don't have Type = {name}; name = {name}");
+                LLog.Error($"Multiple Panel Get Group Error: Don't have Type = {name}; name = {name}");
             }
             foreach (var kv in panels) {
                 var panel = kv.Value;
@@ -148,7 +149,7 @@ namespace MortiseFrame.Loom {
             string name = typeof(T).Name;
             var has = openedMultiDict.TryGetValue(name, out var panels);
             if (!has) {
-                LLog.Log($"Multiple Panel Remove Group Error: name = {name}");
+                LLog.Error($"Multiple Panel Remove Group Error: name = {name}");
             }
             intTempList.Clear();
             foreach (var kv in panels) {

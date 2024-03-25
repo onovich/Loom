@@ -9,7 +9,10 @@ namespace MortiseFrame.Loom {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
-            var panel = GameObject.Instantiate(prefab, ctx.OverlayCanvas.transform).GetComponent<T>();
+            var panel = GameObject.Instantiate(prefab).GetComponent<T>();
+            var inWorldSpace = panel.InWorldSpace;
+            var root = inWorldSpace ? ctx.WorldSpaceFakeCanvas : ctx.OverlayCanvas.transform;
+            panel.GO.transform.SetParent(root, false);
             ctx.UniquePanel_Add(name, panel);
             return panel;
         }
@@ -43,6 +46,9 @@ namespace MortiseFrame.Loom {
             var panel = GameObject.Instantiate(prefab, ctx.OverlayCanvas.transform).GetComponent<T>();
             var id = ctx.PickID();
             panel.SetID(id);
+            var inWorldSpace = panel.InWorldSpace;
+            var root = inWorldSpace ? ctx.WorldSpaceFakeCanvas : ctx.OverlayCanvas.transform;
+            panel.GO.transform.SetParent(root, false);
             ctx.MultiplePanel_Add(name, id, panel);
             return panel;
         }
@@ -65,11 +71,9 @@ namespace MortiseFrame.Loom {
 
         public static void MultiplePanel_CloseGroup<T>(UIContext ctx) where T : IPanel {
             var group = ctx.MultiplePanel_GetGroup<T>();
-            LLog.Log("Close Multi Group");
             ctx.MultiplePanel_RemoveGroup<T>();
 
             foreach (var panel in group) {
-                LLog.Log("Destroy Panel: " + panel.GO.name);
                 GameObject.Destroy(panel.GO);
             }
         }

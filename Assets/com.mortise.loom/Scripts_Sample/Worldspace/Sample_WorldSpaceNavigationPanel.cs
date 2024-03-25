@@ -21,7 +21,6 @@ namespace MortiseFrame.Loom.Sample {
 
         int id;
         int IPanel.ID => id;
-        bool IPanel.IsUnique => true;
         GameObject IPanel.GO => gameObject;
 
         bool inWorldSpace;

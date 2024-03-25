@@ -26,6 +26,7 @@ namespace MortiseFrame.Loom.Sample {
         public static void TimerPanel_OpenMulti(Sample_OverlayUIContext ctx) {
             var panel = ctx.MultiplePanel_Open<Sample_MultipleTimerPanel>();
             panel.Ctor();
+            panel.SetInWorldSpace(false);
             panel.OnClickResetHandle = ctx.Evt.Timer_OnResetClickHandle;
             panel.OnClickCloseHandle = ctx.Evt.Timer_OnCloseClickMultiHandle;
             var id = panel.ID;
@@ -64,13 +65,13 @@ namespace MortiseFrame.Loom.Sample {
         public static void TimerPanel_CloseAll(Sample_OverlayUIContext ctx) {
             ctx.UniquePanel_Close<Sample_UniqueTimerPanel>();
             ctx.MultiplePanel_CloseGroup<Sample_MultipleTimerPanel>();
-            LLog.Log("Close All");
         }
 
         // Navigation
         public static void OverlayNavigationPanel_OpenUnique(Sample_OverlayUIContext ctx) {
             var panel = ctx.UniquePanel_Open<Sample_OverlayNavigationPanel>();
             panel.Ctor();
+            panel.SetInWorldSpace(false);
             panel.OnClickOpenUniqueHandle = ctx.Evt.OnOpenUniqueClickHandle;
             panel.OnCLickOpenMultiHandle = ctx.Evt.OnOpenMultiClickHandle;
             panel.OnClickCloseUniqueHandle = ctx.Evt.OnCloseUniqueClickHandle;
@@ -81,7 +82,6 @@ namespace MortiseFrame.Loom.Sample {
         public static void OverlayNavigationPanel_Close(Sample_OverlayUIContext ctx) {
             ctx.UniquePanel_Close<Sample_OverlayNavigationPanel>();
         }
-
 
     }
 

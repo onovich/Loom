@@ -25,7 +25,7 @@ namespace MortiseFrame.Loom {
                     ctx.Asset_AddPrefab(prefab.name, prefab);
                 }
             } catch (Exception e) {
-                LLog.Log(e.ToString());
+                LLog.Error(e.ToString());
             }
         }
 
