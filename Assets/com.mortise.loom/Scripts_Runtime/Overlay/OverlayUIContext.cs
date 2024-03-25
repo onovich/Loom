@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,6 +88,21 @@ namespace MortiseFrame.Loom {
             return null;
         }
 
+        public int MultiplePanel_GroupCount<T>() where T : MonoBehaviour {
+            string name = typeof(T).Name;
+            if (openedMultiDict.TryGetValue(name, out var panels)) {
+                return panels.Count;
+            }
+            return 0;
+        }
+
+        public int MultiplePanel_GetID<T>(T panel) where T : MonoBehaviour {
+            if (idDict.TryGetValue(panel, out var id)) {
+                return id;
+            }
+            return -1;
+        }
+
         public List<MonoBehaviour> MultiplePanel_GetGroup<T>() where T : MonoBehaviour {
             string name = typeof(T).Name;
             tempList.Clear();
@@ -99,6 +115,18 @@ namespace MortiseFrame.Loom {
                 tempList.Add(panel);
             }
             return tempList;
+        }
+
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
+            string name = typeof(T).Name;
+            var has = (openedMultiDict.TryGetValue(name, out var panels));
+            if (!has) {
+                return;
+            }
+            foreach (var kv in panels) {
+                var panel = kv.Value;
+                action(panel as T);
+            }
         }
 
         public void MultiplePanel_Remove<T>(int id) where T : MonoBehaviour {

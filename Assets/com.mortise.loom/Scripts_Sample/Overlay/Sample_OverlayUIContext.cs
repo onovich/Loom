@@ -56,6 +56,18 @@ namespace MortiseFrame.Loom.Sample {
         public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
             uiCore.MultiplePanel_Close<T>(panelInstance);
         }
+
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
+            uiCore.MultiplePanel_GroupForEach<T>(action);
+        }
+
+        public int MultiplePanel_GetID<T>(T panel) where T : MonoBehaviour {
+            return uiCore.MultiplePanel_GetID(panel);
+        }
+
+        public void MultiplePanel_CloseGroup<T>() where T : MonoBehaviour {
+            uiCore.MultiplePanel_CloseGroup<T>();
+        }
         #endregion
 
     }

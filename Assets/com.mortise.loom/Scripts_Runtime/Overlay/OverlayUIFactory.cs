@@ -14,15 +14,15 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static void UniquePanel_Close<T>(OverlayUIContext ctx) where T : MonoBehaviour {
+        public static bool UniquePanel_TryClose<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             string name = typeof(T).Name;
             bool has = ctx.UniquePanel_TryGet(name, out var panel);
             if (!has) {
-                LLog.Warning($"UIFactory.Close<{name}>: Panel not found");
-                return;
+                return false;
             }
             ctx.UniquePanel_Remove(name);
             GameObject.Destroy(panel.gameObject);
+            return true;
         }
 
         static GameObject GetPrefab(OverlayUIContext ctx, string name) {
@@ -45,25 +45,31 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static void MultiplePanel_Close<T>(OverlayUIContext ctx, T panelInstance) where T : MonoBehaviour {
+        public static bool MultiplePanel_TryClose<T>(OverlayUIContext ctx, T panelInstance) where T : MonoBehaviour {
             var has = (ctx.idDict.TryGetValue(panelInstance, out var id));
             if (!has) {
-                LLog.Warning($"UIFactory.MultiplePanel_Close: Panel or ID not found for {typeof(T).Name}");
+                LLog.Warning("MultiplePanel_TryClose: Panel not found in ID Dict");
+                return false;
             }
             has = ctx.openedMultiDict.TryGetValue(typeof(T).Name, out var panels);
             if (!has) {
-                LLog.Warning($"UIFactory.MultiplePanel_Close: Panel or ID not found for {typeof(T).Name}");
+                LLog.Warning("MultiplePanel_TryClose: Panel not found in Opened Multi Dict");
+                return false;
             }
             ctx.MultiplePanel_Remove<T>(id);
             GameObject.Destroy(panelInstance.gameObject);
+            return true;
         }
 
         public static void MultiplePanel_CloseGroup<T>(OverlayUIContext ctx) where T : MonoBehaviour {
             var group = ctx.MultiplePanel_GetGroup<T>();
-            foreach (var panel in group) {
-                GameObject.Destroy(panel);
-            }
+            LLog.Log("Close Multi Group");
             ctx.MultiplePanel_RemoveGroup<T>();
+
+            foreach (var panel in group) {
+                LLog.Log("Destroy Panel: " + panel.name);
+                GameObject.Destroy(panel.gameObject);
+            }
         }
         #endregion
 

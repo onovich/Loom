@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace MortiseFrame.Loom.Sample {
 
@@ -10,45 +11,51 @@ namespace MortiseFrame.Loom.Sample {
             Timer_OnResetClickHandle?.Invoke();
         }
 
-        public Action Timer_OnCloseClickHandle;
-        public void Timer_OnCloseCick() {
-            Timer_OnCloseClickHandle?.Invoke();
+        public Action Timer_OnCloseClickUniqueHandle;
+        public void Timer_OnCloseClickUnique() {
+            Timer_OnCloseClickUniqueHandle?.Invoke();
         }
 
-        // Overlay Navigation
-        public Action Overlay_OnOpenUniqueClickHandle;
-        public void Overlay_OnOpenUniqueClick() {
-            Overlay_OnOpenUniqueClickHandle?.Invoke();
+        public Action<MonoBehaviour> Timer_OnCloseClickMultiHandle;
+        public void Timer_OnCloseClickMulti(MonoBehaviour panel) {
+            Timer_OnCloseClickMultiHandle?.Invoke(panel);
         }
 
-        public Action Overlay_OnOpenMultiClickHandle;
-        public void Overlay_OnOpenMultiClick() {
-            Overlay_OnOpenMultiClickHandle?.Invoke();
+        // Navigation
+        public Action OnOpenUniqueClickHandle;
+        public void OnOpenUniqueClick() {
+            OnOpenUniqueClickHandle?.Invoke();
         }
 
-        public Action Overlay_OnCloseUniqueClickHandle;
-        public void Overlay_OnCloseUniqueClick() {
-            Overlay_OnCloseUniqueClickHandle?.Invoke();
+        public Action OnOpenMultiClickHandle;
+        public void OnOpenMultiClick() {
+            OnOpenMultiClickHandle?.Invoke();
         }
 
-        public Action Overlay_OnCloseMultiGroupClickHandle;
-        public void Overlay_OnCloseMultiGroupClick() {
-            Overlay_OnCloseMultiGroupClickHandle?.Invoke();
+        public Action OnCloseUniqueClickHandle;
+        public void OnCloseUniqueClick() {
+            OnCloseUniqueClickHandle?.Invoke();
         }
 
-        public Action Overlay_OnCloseAllClickHandle;
-        public void Overlay_OnCloseAllClick() {
-            Overlay_OnCloseAllClickHandle?.Invoke();
+        public Action OnCloseMultiGroupClickHandle;
+        public void OnCloseMultiGroupClick() {
+            OnCloseMultiGroupClickHandle?.Invoke();
+        }
+
+        public Action OnCloseAllClickHandle;
+        public void OnCloseAllClick() {
+            OnCloseAllClickHandle?.Invoke();
         }
 
         public void Clear() {
             Timer_OnResetClickHandle = null;
-            Timer_OnCloseClickHandle = null;
-            Overlay_OnOpenUniqueClickHandle = null;
-            Overlay_OnOpenMultiClickHandle = null;
-            Overlay_OnCloseUniqueClickHandle = null;
-            Overlay_OnCloseMultiGroupClickHandle = null;
-            Overlay_OnCloseAllClickHandle = null;
+            Timer_OnCloseClickUniqueHandle = null;
+            Timer_OnCloseClickMultiHandle = null;
+            OnOpenUniqueClickHandle = null;
+            OnOpenMultiClickHandle = null;
+            OnCloseUniqueClickHandle = null;
+            OnCloseMultiGroupClickHandle = null;
+            OnCloseAllClickHandle = null;
         }
 
     }

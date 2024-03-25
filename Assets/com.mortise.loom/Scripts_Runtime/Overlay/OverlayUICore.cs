@@ -33,6 +33,11 @@ namespace MortiseFrame.Loom {
 
         #region Unique Panel
         public T UniquePanel_Open<T>() where T : MonoBehaviour {
+            var name = typeof(T).Name;
+            var has = ctx.UniquePanel_TryGet(name, out var panel);
+            if (panel != null) {
+                return panel as T;
+            }
             return OverlayUIFactory.UniquePanel_Open<T>(ctx);
         }
 
@@ -49,7 +54,7 @@ namespace MortiseFrame.Loom {
         }
 
         public void UniquePanel_Close<T>() where T : MonoBehaviour {
-            OverlayUIFactory.UniquePanel_Close<T>(ctx);
+            OverlayUIFactory.UniquePanel_TryClose<T>(ctx);
         }
         #endregion
 
@@ -59,7 +64,19 @@ namespace MortiseFrame.Loom {
         }
 
         public void MultiplePanel_Close<T>(T panelInstance) where T : MonoBehaviour {
-            OverlayUIFactory.MultiplePanel_Close<T>(ctx, panelInstance);
+            OverlayUIFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
+        }
+
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : MonoBehaviour {
+            ctx.MultiplePanel_GroupForEach<T>(action);
+        }
+
+        public int MultiplePanel_GroupCount<T>() where T : MonoBehaviour {
+            return ctx.MultiplePanel_GroupCount<T>();
+        }
+
+        public int MultiplePanel_GetID<T>(T panel) where T : MonoBehaviour {
+            return ctx.MultiplePanel_GetID(panel);
         }
 
         public void MultiplePanel_CloseGroup<T>() where T : MonoBehaviour {

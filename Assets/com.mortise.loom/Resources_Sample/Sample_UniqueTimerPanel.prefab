@@ -316,7 +316,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 525790476752261040}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -631,8 +631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 190, y: 190}
-  m_SizeDelta: {x: -420, y: -420}
+  m_AnchoredPosition: {x: 390, y: 290}
+  m_SizeDelta: {x: -820, y: -620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3319436185659598766
 CanvasRenderer:
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 6811967180003159801}
   - component: {fileID: 4079255595742316360}
   m_Layer: 5
-  m_Name: Sample_TimerPanel
+  m_Name: Sample_UniqueTimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
