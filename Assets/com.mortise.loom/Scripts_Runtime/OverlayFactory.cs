@@ -24,9 +24,9 @@ namespace MortiseFrame.Loom {
             if (!has) {
                 return false;
             }
-            ctx.UniquePanel_Remove(name);
-            var go = ctx.GetGameObject(panel);
-            GameObject.Destroy(go);
+            ctx.UniquePanel_Remove(name, (go) => {
+                GameObject.Destroy(go);
+            });
             return true;
         }
 
@@ -62,20 +62,17 @@ namespace MortiseFrame.Loom {
                 LLog.Warning("MultiplePanel_TryClose: Panel not found in Opened Multi Dict");
                 return false;
             }
-            ctx.MultiplePanel_Remove<T>(id);
-            var go = ctx.GetGameObject(panel);
-            GameObject.Destroy(go);
+            ctx.MultiplePanel_Remove<T>(id, (go) => {
+                GameObject.Destroy(go);
+            });
             return true;
         }
 
         public static void MultiplePanel_CloseGroup<T>(OverlayContext ctx) where T : IPanel {
             var group = ctx.MultiplePanel_GetGroup<T>();
-            ctx.MultiplePanel_RemoveGroup<T>();
-
-            foreach (var panel in group) {
-                var go = ctx.GetGameObject(panel);
+            ctx.MultiplePanel_RemoveGroup<T>((go) => {
                 GameObject.Destroy(go);
-            }
+            });
         }
         #endregion
 

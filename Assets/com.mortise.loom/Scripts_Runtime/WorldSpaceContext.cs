@@ -67,17 +67,21 @@ namespace MortiseFrame.Loom {
             }
             if (panel is IWorldPanel _panel) {
                 goDict.Add(_panel, go.gameObject);
+            } else {
+                LLog.Error($"Unique Panel Add Error: Panel is not IWorldPanel; name = {name}");
             }
             openedUniqueDict.Add(name, panel);
         }
 
-        public void UniquePanel_Remove(string name) {
+        public void UniquePanel_Remove(string name, Action<GameObject> onDestroy) {
             if (!openedUniqueDict.TryGetValue(name, out var panel)) {
                 LLog.Error($"Unique Panel Remove Error: Not found Type = {name}; name = {name}");
                 return;
             }
-            goDict.Remove(panel);
             openedUniqueDict.Remove(name);
+            var go = GetGameObject(panel);
+            onDestroy(go);
+            goDict.Remove(panel);
         }
 
         public bool UniquePanel_TryGet(string name, out IWorldPanel com) {
@@ -104,6 +108,8 @@ namespace MortiseFrame.Loom {
 
             if (panel is IWorldPanel _panel) {
                 goDict.Add(_panel, go.gameObject);
+            } else {
+                LLog.Error($"Multiple Panel Add Error: Panel is not IWorldPanel; name = {name}");
             }
 
             if (idDict.ContainsKey(panel)) {
@@ -160,19 +166,22 @@ namespace MortiseFrame.Loom {
             }
         }
 
-        public void MultiplePanel_Remove<T>(int id) where T : IWorldPanel {
+        public void MultiplePanel_Remove<T>(int id, Action<GameObject> onDestroy) where T : IWorldPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels)) {
-                idDict.Remove(panels[id]);
+                var panel = panels[id];
+                idDict.Remove(panel);
                 panels.Remove(id);
                 if (panels.Count == 0) {
                     openedMultiDict.Remove(name);
                 }
-                goDict.Remove(panels[id]);
+                var go = GetGameObject(panel);
+                onDestroy(go);
+                goDict.Remove(panel);
             }
         }
 
-        public void MultiplePanel_RemoveGroup<T>() where T : IWorldPanel {
+        public void MultiplePanel_RemoveGroup<T>(Action<GameObject> onDestroy) where T : IWorldPanel {
             string name = typeof(T).Name;
             var has = openedMultiDict.TryGetValue(name, out var panels);
             if (!has) {
@@ -184,11 +193,20 @@ namespace MortiseFrame.Loom {
                 idDict.Remove(panel);
                 var id = kv.Key;
                 intTempList.Add(id);
+                var go = GetGameObject(panel);
+                onDestroy(go);
                 goDict.Remove(panel);
             }
             foreach (var id in intTempList) {
                 panels.Remove(id);
             }
+        }
+
+        public int MultiplePanel_GetID<T>(T panel) where T : IWorldPanel {
+            if (idDict.TryGetValue(panel, out var id)) {
+                return id;
+            }
+            return -1;
         }
         #endregion
 
