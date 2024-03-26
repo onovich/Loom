@@ -18,10 +18,12 @@ namespace MortiseFrame.Loom.Sample {
             LLog.Log = Debug.Log;
             LLog.Error = Debug.LogError;
             LLog.Warning = Debug.LogWarning;
+            LLog.Assert = (condition, message) => Debug.Assert(condition, message);
 
             Canvas mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
             Transform worldSpaceFakeCanvas = GameObject.Find("FakeCanvas").transform;
-            uiCtx = new Sample_UIContext(mainCanvas, worldSpaceFakeCanvas);
+            Camera worldSpaceCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+            uiCtx = new Sample_UIContext(mainCanvas, worldSpaceFakeCanvas, worldSpaceCamera);
             logicCtx = new Sample_LogicContext();
 
             logicCtx.Inject(uiCtx);
@@ -47,26 +49,35 @@ namespace MortiseFrame.Loom.Sample {
                 Sample_LogicDomain.OnResetTimer(logicCtx);
             };
             evt.Timer_OnCloseClickUniqueHandle = () => {
-                Sample_LogicDomain.OnCloseTimerUnique(logicCtx);
+                Sample_LogicDomain.OnWorldSpaceCloseTimerUnique(logicCtx);
             };
             evt.OnCloseAllClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseAll(uiCtx);
+                Sample_WorldSpaceUIDomain.TimerPanel_CloseAll(uiCtx);
             };
             evt.OnCloseMultiGroupClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseMultiGroup(uiCtx);
+                Sample_WorldSpaceUIDomain.TimerPanel_CloseMultiGroup(uiCtx);
             };
             evt.OnCloseUniqueClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseUnique(uiCtx);
+                Sample_WorldSpaceUIDomain.TimerPanel_CloseUnique(uiCtx);
             };
             evt.OnOpenMultiClickHandle = () => {
-                Sample_UIDomain.TimerPanel_OpenMulti(uiCtx, true);
+                Sample_WorldSpaceUIDomain.TimerPanel_OpenMulti(uiCtx);
             };
             evt.Timer_OnCloseClickMultiHandle = (panel) => {
-                Sample_UIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_MultipleTimerPanel)panel);
+                Sample_WorldSpaceUIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_WorldSpaceMultipleTimerPanel)panel);
             };
             evt.OnOpenUniqueClickHandle = () => {
-                Sample_UIDomain.TimerPanel_OpenUnique(uiCtx, true);
+                Sample_WorldSpaceUIDomain.TimerPanel_OpenUnique(uiCtx);
             };
+        }
+
+        void Unbinding() {
+            var evt = uiCtx.Evt;
+            evt.Clear();
+        }
+
+        void OnDestroy() {
+            Unbinding();
         }
 
         public void Update() {
@@ -81,8 +92,8 @@ namespace MortiseFrame.Loom.Sample {
             if (!isLoaded) {
                 return;
             }
-            Sample_UIDomain.TimerPanel_TryRefreshUnique(uiCtx, logicCtx.Timer);
-            Sample_UIDomain.TimerPanel_TickRefresh(uiCtx, logicCtx.Timer);
+            Sample_WorldSpaceUIDomain.TimerPanel_TryRefreshUnique(uiCtx, logicCtx.Timer);
+            Sample_WorldSpaceUIDomain.TimerPanel_TickRefresh(uiCtx, logicCtx.Timer);
         }
 
     }

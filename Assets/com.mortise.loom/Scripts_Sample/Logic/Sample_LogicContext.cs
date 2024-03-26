@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace MortiseFrame.Loom.Sample {
 
     public class Sample_LogicContext {
@@ -7,6 +9,10 @@ namespace MortiseFrame.Loom.Sample {
 
         Sample_UIContext uiContext;
         public Sample_UIContext UIContext => uiContext;
+
+        public Sample_LogicContext() {
+            this.timer = 0;
+        }
 
         public void Inject(Sample_UIContext uiContext) {
             this.uiContext = uiContext;

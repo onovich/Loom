@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 6ea714e43f923436cae750d1aa1fb722
   m_SerializeEntries:
   - m_GUID: 65334086ccf41443ebfc09cbe57fe098
-    m_Address: Sample_UniqueTimerPanel
+    m_Address: Sample_OverlayUniqueTimerPanel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
@@ -29,14 +29,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4d662a26970774378b2b792dd7175c7c
-    m_Address: Sample_WorldSpaceNavigationPanel
+  - m_GUID: 1f77cad8689ecee4491e756963ad5fc4
+    m_Address: Sample_OverlayMultipleTimerPanel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1f77cad8689ecee4491e756963ad5fc4
-    m_Address: Sample_MultipleTimerPanel
+  - m_GUID: 854aee2fda06a334ebe0c934974e8ebe
+    m_Address: Sample_WorldSpaceMultipleTimerPanel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa879bd872b8bca4cb68675035a87c64
+    m_Address: Sample_WorldSpaceUniqueTimerPanel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI

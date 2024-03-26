@@ -13,6 +13,9 @@ namespace MortiseFrame.Loom {
         Transform worldSpaceFakeCanvas;
         public Transform WorldSpaceFakeCanvas => worldSpaceFakeCanvas;
 
+        Camera worldSpaceCamera;
+        public Camera WorldSpaceCamera => worldSpaceCamera;
+
         // Repo
         public Dictionary<string, IPanel> openedUniqueDict;
         public Dictionary<string/*name*/, Dictionary<int/*id*/, IPanel/*panel*/>> openedMultiDict;
@@ -49,6 +52,10 @@ namespace MortiseFrame.Loom {
             return ++idRecord;
         }
 
+        public int GetID(IPanel panel) {
+            return idDict[panel];
+        }
+
         public void Asset_AddPrefab(string name, GameObject prefab) {
             prefabDict.Add(name, prefab);
         }
@@ -59,6 +66,10 @@ namespace MortiseFrame.Loom {
 
         public void SetWorldSpaceFakeCanvas(Transform worldSpaceFakeCanvas) {
             this.worldSpaceFakeCanvas = worldSpaceFakeCanvas;
+        }
+
+        public void SetWorldSpaceCamera(Camera worldSpaceCamera) {
+            this.worldSpaceCamera = worldSpaceCamera;
         }
 
         #region Unique Panel

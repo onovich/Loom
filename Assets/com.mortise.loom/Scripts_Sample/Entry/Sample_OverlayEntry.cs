@@ -18,6 +18,7 @@ namespace MortiseFrame.Loom.Sample {
             LLog.Log = Debug.Log;
             LLog.Error = Debug.LogError;
             LLog.Warning = Debug.LogWarning;
+            LLog.Assert = (condition, message) => Debug.Assert(condition, message);
 
             Canvas mainCanvas = GameObject.Find("MainCanvas").GetComponent<Canvas>();
             uiCtx = new Sample_UIContext(mainCanvas);
@@ -46,26 +47,35 @@ namespace MortiseFrame.Loom.Sample {
                 Sample_LogicDomain.OnResetTimer(logicCtx);
             };
             evt.Timer_OnCloseClickUniqueHandle = () => {
-                Sample_LogicDomain.OnCloseTimerUnique(logicCtx);
+                Sample_LogicDomain.OnOverlapCloseTimerUnique(logicCtx);
             };
             evt.OnCloseAllClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseAll(uiCtx);
+                Sample_OverlayUIDomain.TimerPanel_CloseAll(uiCtx);
             };
             evt.OnCloseMultiGroupClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseMultiGroup(uiCtx);
+                Sample_OverlayUIDomain.TimerPanel_CloseMultiGroup(uiCtx);
             };
             evt.OnCloseUniqueClickHandle = () => {
-                Sample_UIDomain.TimerPanel_CloseUnique(uiCtx);
+                Sample_OverlayUIDomain.TimerPanel_CloseUnique(uiCtx);
             };
             evt.OnOpenMultiClickHandle = () => {
-                Sample_UIDomain.TimerPanel_OpenMulti(uiCtx);
+                Sample_OverlayUIDomain.TimerPanel_OpenMulti(uiCtx);
             };
             evt.Timer_OnCloseClickMultiHandle = (panel) => {
-                Sample_UIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_MultipleTimerPanel)panel);
+                Sample_OverlayUIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_OverlayMultipleTimerPanel)panel);
             };
             evt.OnOpenUniqueClickHandle = () => {
-                Sample_UIDomain.TimerPanel_OpenUnique(uiCtx);
+                Sample_OverlayUIDomain.TimerPanel_OpenUnique(uiCtx);
             };
+        }
+
+        void Unbinding() {
+            var evt = uiCtx.Evt;
+            evt.Clear();
+        }
+
+        void OnDestroy() {
+            Unbinding();
         }
 
         public void Update() {
@@ -80,8 +90,8 @@ namespace MortiseFrame.Loom.Sample {
             if (!isLoaded) {
                 return;
             }
-            Sample_UIDomain.TimerPanel_TryRefreshUnique(uiCtx, logicCtx.Timer);
-            Sample_UIDomain.TimerPanel_TickRefresh(uiCtx, logicCtx.Timer);
+            Sample_OverlayUIDomain.TimerPanel_TryRefreshUnique(uiCtx, logicCtx.Timer);
+            Sample_OverlayUIDomain.TimerPanel_TickRefresh(uiCtx, logicCtx.Timer);
         }
 
     }

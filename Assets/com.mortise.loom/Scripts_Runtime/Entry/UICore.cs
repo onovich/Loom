@@ -17,6 +17,9 @@ namespace MortiseFrame.Loom {
             }
             if (worldSpaceFakeCanvas != null) {
                 ctx.SetWorldSpaceFakeCanvas(worldSpaceFakeCanvas);
+                LLog.Assert(worldSpaceCamera != null, "worldSpaceCamera != null");
+                ctx.SetWorldSpaceCamera(worldSpaceCamera);
+                LLog.Log("World Space UI Enabled");
             }
         }
 
@@ -43,9 +46,22 @@ namespace MortiseFrame.Loom {
             var name = typeof(T).Name;
             var has = ctx.UniquePanel_TryGet(name, out var panel);
             if (panel != null) {
+                if (isWorldSpace) {
+                    SetWorldSpaceCamera(panel);
+                }
                 return (T)panel;
             }
-            return UIFactory.UniquePanel_Open<T>(ctx, isWorldSpace);
+            panel = UIFactory.UniquePanel_Open<T>(ctx, isWorldSpace);
+            if (isWorldSpace) {
+                SetWorldSpaceCamera(panel);
+            }
+            return (T)panel;
+        }
+
+        void SetWorldSpaceCamera<T>(T panel) where T : IPanel {
+            if (panel is MonoBehaviour _panel) {
+                _panel.GetComponent<Canvas>().worldCamera = ctx.WorldSpaceCamera;
+            }
         }
 
         public T UniquePanel_Get<T>() where T : IPanel {
@@ -61,13 +77,20 @@ namespace MortiseFrame.Loom {
         }
 
         public void UniquePanel_Close<T>() where T : IPanel {
-            UIFactory.UniquePanel_TryClose<T>(ctx);
+            var succ = UIFactory.UniquePanel_TryClose<T>(ctx);
+            if (!succ) {
+                LLog.Warning($"UniquePanel_Close<{typeof(T).Name}>: Panel not found");
+            }
         }
         #endregion
 
         #region  Multiple Panel
         public T MultiplePanel_Open<T>(bool isWorldSpace = false) where T : IPanel {
-            return UIFactory.MultiplePanel_Open<T>(ctx, isWorldSpace);
+            var panel = UIFactory.MultiplePanel_Open<T>(ctx, isWorldSpace);
+            if (isWorldSpace) {
+                SetWorldSpaceCamera(panel);
+            }
+            return panel;
         }
 
         public void MultiplePanel_Close<T>(T panelInstance) where T : IPanel {
@@ -86,6 +109,10 @@ namespace MortiseFrame.Loom {
             UIFactory.MultiplePanel_CloseGroup<T>(ctx);
         }
         #endregion
+
+        public int GetID(IPanel panel) {
+            return ctx.GetID(panel);
+        }
 
     }
 

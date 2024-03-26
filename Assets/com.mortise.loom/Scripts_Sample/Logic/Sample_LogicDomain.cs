@@ -7,12 +7,16 @@ namespace MortiseFrame.Loom.Sample {
             Sample_LogicDomain.Logic_ResetTimer(ctx);
         }
 
-        public static void OnCloseTimerUnique(Sample_LogicContext ctx) {
-            Sample_UIDomain.TimerPanel_CloseUnique(ctx.UIContext);
+        public static void OnOverlapCloseTimerUnique(Sample_LogicContext ctx) {
+            Sample_OverlayUIDomain.TimerPanel_CloseUnique(ctx.UIContext);
+        }
+
+        public static void OnWorldSpaceCloseTimerUnique(Sample_LogicContext ctx) {
+            Sample_WorldSpaceUIDomain.TimerPanel_CloseUnique(ctx.UIContext);
         }
 
         public static void Logic_EnterGame(Sample_LogicContext ctx) {
-            Sample_UIDomain.OverlayNavigationPanel_OpenUnique(ctx.UIContext);
+            Sample_NavigationUIDoamin.NavigationPanel_OpenUnique(ctx.UIContext);
         }
 
         public static void Logic_ResetTimer(Sample_LogicContext ctx) {

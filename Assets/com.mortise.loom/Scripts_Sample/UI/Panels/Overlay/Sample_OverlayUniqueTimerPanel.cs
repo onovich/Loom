@@ -4,26 +4,22 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class Sample_MultipleTimerPanel : MonoBehaviour, IPanel {
+    public class Sample_OverlayUniqueTimerPanel : MonoBehaviour, IPanel {
 
         [SerializeField] Text txt_timer;
         [SerializeField] Button btn_close;
         [SerializeField] Button btn_reset;
 
-        public Action<MonoBehaviour> OnClickCloseHandle;
+        public Action OnClickCloseHandle;
         public Action OnClickResetHandle;
 
         public void Ctor() {
             btn_close.onClick.AddListener(() => {
-                OnClickCloseHandle?.Invoke(this);
+                OnClickCloseHandle?.Invoke();
             });
             btn_reset.onClick.AddListener(() => {
                 OnClickResetHandle?.Invoke();
             });
-        }
-
-        public void SetPos(Vector2 pos) {
-            transform.localPosition = pos;
         }
 
         public void RefreshTimer(float timer) {

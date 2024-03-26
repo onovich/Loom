@@ -629,11 +629,11 @@ RectTransform:
   - {fileID: 6555973211741509828}
   m_Father: {fileID: 9106628414476413058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10, y: -10}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 10, y: -10}
   m_SizeDelta: {x: 440, y: 50}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3319436185659598766
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -728,9 +728,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9106628414476413058}
   - component: {fileID: 6811967180003159801}
-  - component: {fileID: 4079255595742316360}
+  - component: {fileID: 7576379093409269247}
   m_Layer: 5
-  m_Name: Sample_UniqueTimerPanel
+  m_Name: Sample_OverlayMultipleTimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,7 +764,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9109730992914628376}
   m_CullTransparentMesh: 1
---- !u!114 &4079255595742316360
+--- !u!114 &7576379093409269247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -773,7 +773,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9109730992914628376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4320adff9185e42a58e47e2365c54f96, type: 3}
+  m_Script: {fileID: 11500000, guid: b3ff54a9d691af746af377b64661914f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   txt_timer: {fileID: 4374276591062343688}
