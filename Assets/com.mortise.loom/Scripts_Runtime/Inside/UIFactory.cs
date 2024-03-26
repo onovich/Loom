@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public static class UIFactory {
+    internal static class UIFactory {
 
         #region Unique Panel
-        public static T UniquePanel_Open<T>(UIContext ctx, bool isWorldSpace = false) where T : IPanel {
+        internal static T UniquePanel_Open<T>(UIContext ctx, bool isWorldSpace = false) where T : IPanel {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
@@ -19,7 +19,7 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static bool UniquePanel_TryClose<T>(UIContext ctx) where T : IPanel {
+        internal static bool UniquePanel_TryClose<T>(UIContext ctx) where T : IPanel {
             string name = typeof(T).Name;
             bool has = ctx.UniquePanel_TryGet(name, out var panel);
             if (!has) {
@@ -42,7 +42,7 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public static T MultiplePanel_Open<T>(UIContext ctx, bool isWorldSpace) where T : IPanel {
+        internal static T MultiplePanel_Open<T>(UIContext ctx, bool isWorldSpace) where T : IPanel {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
@@ -53,7 +53,7 @@ namespace MortiseFrame.Loom {
             return panel;
         }
 
-        public static bool MultiplePanel_TryClose<T>(UIContext ctx, T panel) where T : IPanel {
+        internal static bool MultiplePanel_TryClose<T>(UIContext ctx, T panel) where T : IPanel {
             var has = (ctx.idDict.TryGetValue(panel, out var id));
             if (!has) {
                 LLog.Warning("MultiplePanel_TryClose: Panel not found in ID Dict");
@@ -70,7 +70,7 @@ namespace MortiseFrame.Loom {
             return true;
         }
 
-        public static void MultiplePanel_CloseGroup<T>(UIContext ctx) where T : IPanel {
+        internal static void MultiplePanel_CloseGroup<T>(UIContext ctx) where T : IPanel {
             var group = ctx.MultiplePanel_GetGroup<T>();
             ctx.MultiplePanel_RemoveGroup<T>((go) => {
                 GameObject.Destroy(go);

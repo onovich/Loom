@@ -4,40 +4,40 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public class UIContext {
+    internal class UIContext {
 
         // Canvas
         Canvas overlayCanvas;
-        public Canvas OverlayCanvas => overlayCanvas;
+        internal Canvas OverlayCanvas => overlayCanvas;
 
         Transform worldSpaceFakeCanvas;
-        public Transform WorldSpaceFakeCanvas => worldSpaceFakeCanvas;
+        internal Transform WorldSpaceFakeCanvas => worldSpaceFakeCanvas;
 
         Camera worldSpaceCamera;
-        public Camera WorldSpaceCamera => worldSpaceCamera;
+        internal Camera WorldSpaceCamera => worldSpaceCamera;
 
         // Repo
-        public Dictionary<string, IPanel> openedUniqueDict;
-        public Dictionary<string/*name*/, Dictionary<int/*id*/, IPanel/*panel*/>> openedMultiDict;
+        internal Dictionary<string, IPanel> openedUniqueDict;
+        internal Dictionary<string/*name*/, Dictionary<int/*id*/, IPanel/*panel*/>> openedMultiDict;
 
         // Temp
         List<IPanel> tempList;
         List<int> intTempList;
 
         // ID Dict
-        public Dictionary<IPanel, int> idDict;
-        public int idRecord;
+        internal Dictionary<IPanel, int> idDict;
+        internal int idRecord;
 
         // GO Dict
-        public Dictionary<IPanel, GameObject> goDict;
+        internal Dictionary<IPanel, GameObject> goDict;
 
         // Prefab
-        public Dictionary<string, GameObject> prefabDict;
+        internal Dictionary<string, GameObject> prefabDict;
 
         // Const
-        public string AssetsLabel;
+        internal string AssetsLabel;
 
-        public UIContext() {
+        internal UIContext() {
             openedUniqueDict = new Dictionary<string, IPanel>();
             openedMultiDict = new Dictionary<string, Dictionary<int, IPanel>>();
             idDict = new Dictionary<IPanel, int>();
@@ -48,32 +48,32 @@ namespace MortiseFrame.Loom {
             idRecord = 0;
         }
 
-        public int PickID() {
+        internal int PickID() {
             return ++idRecord;
         }
 
-        public int GetID(IPanel panel) {
+        internal int GetID(IPanel panel) {
             return idDict[panel];
         }
 
-        public void Asset_AddPrefab(string name, GameObject prefab) {
+        internal void Asset_AddPrefab(string name, GameObject prefab) {
             prefabDict.Add(name, prefab);
         }
 
-        public void SetOverlayCanvas(Canvas mainCanvas) {
+        internal void SetOverlayCanvas(Canvas mainCanvas) {
             this.overlayCanvas = mainCanvas;
         }
 
-        public void SetWorldSpaceFakeCanvas(Transform worldSpaceFakeCanvas) {
+        internal void SetWorldSpaceFakeCanvas(Transform worldSpaceFakeCanvas) {
             this.worldSpaceFakeCanvas = worldSpaceFakeCanvas;
         }
 
-        public void SetWorldSpaceCamera(Camera worldSpaceCamera) {
+        internal void SetWorldSpaceCamera(Camera worldSpaceCamera) {
             this.worldSpaceCamera = worldSpaceCamera;
         }
 
         #region Unique Panel
-        public void UniquePanel_Add(string name, IPanel panel) {
+        internal void UniquePanel_Add(string name, IPanel panel) {
             if (openedUniqueDict.ContainsKey(name)) {
                 LLog.Error($"Unique Panel Add Error: Already have Type = {name}; name = {name}");
                 return;
@@ -91,7 +91,7 @@ namespace MortiseFrame.Loom {
             openedUniqueDict.Add(name, panel);
         }
 
-        public void UniquePanel_Remove(string name, Action<GameObject> onDestroy) {
+        internal void UniquePanel_Remove(string name, Action<GameObject> onDestroy) {
             if (!openedUniqueDict.TryGetValue(name, out var panel)) {
                 LLog.Error($"Unique Panel Remove Error: Not found Type = {name}; name = {name}");
                 return;
@@ -102,11 +102,11 @@ namespace MortiseFrame.Loom {
             goDict.Remove(panel);
         }
 
-        public bool UniquePanel_TryGet(string name, out IPanel com) {
+        internal bool UniquePanel_TryGet(string name, out IPanel com) {
             return openedUniqueDict.TryGetValue(name, out com);
         }
 
-        public T UniquePanel_Get<T>() where T : IPanel {
+        internal T UniquePanel_Get<T>() where T : IPanel {
             string name = typeof(T).Name;
             bool has = openedUniqueDict.TryGetValue(name, out var com);
             if (!has) {
@@ -118,7 +118,7 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public void MultiplePanel_Add(string name, int id, IPanel panel) {
+        internal void MultiplePanel_Add(string name, int id, IPanel panel) {
             if (!(panel is MonoBehaviour go)) {
                 LLog.Error($"Multiple Panel Add Error: Panel is not MonoBehaviour; name = {name}");
                 return;
@@ -142,7 +142,7 @@ namespace MortiseFrame.Loom {
             openedMultiDict[name].Add(id, panel);
         }
 
-        public T MultiplePanel_Get<T>(int id) where T : IPanel {
+        internal T MultiplePanel_Get<T>(int id) where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels) && panels.TryGetValue(id, out var panel)) {
                 return (T)panel;
@@ -150,7 +150,7 @@ namespace MortiseFrame.Loom {
             return default(T);
         }
 
-        public int MultiplePanel_GroupCount<T>() where T : IPanel {
+        internal int MultiplePanel_GroupCount<T>() where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels)) {
                 return panels.Count;
@@ -158,7 +158,7 @@ namespace MortiseFrame.Loom {
             return 0;
         }
 
-        public List<IPanel> MultiplePanel_GetGroup<T>() where T : IPanel {
+        internal List<IPanel> MultiplePanel_GetGroup<T>() where T : IPanel {
             string name = typeof(T).Name;
             tempList.Clear();
             var has = (openedMultiDict.TryGetValue(name, out var panels));
@@ -172,7 +172,7 @@ namespace MortiseFrame.Loom {
             return tempList;
         }
 
-        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
+        internal void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
             string name = typeof(T).Name;
             var has = (openedMultiDict.TryGetValue(name, out var panels));
             if (!has) {
@@ -184,7 +184,7 @@ namespace MortiseFrame.Loom {
             }
         }
 
-        public void MultiplePanel_Remove<T>(int id, Action<GameObject> onDestroy) where T : IPanel {
+        internal void MultiplePanel_Remove<T>(int id, Action<GameObject> onDestroy) where T : IPanel {
             string name = typeof(T).Name;
             if (openedMultiDict.TryGetValue(name, out var panels)) {
                 var panel = panels[id];
@@ -199,7 +199,7 @@ namespace MortiseFrame.Loom {
             }
         }
 
-        public void MultiplePanel_RemoveGroup<T>(Action<GameObject> onDestroy) where T : IPanel {
+        internal void MultiplePanel_RemoveGroup<T>(Action<GameObject> onDestroy) where T : IPanel {
             string name = typeof(T).Name;
             var has = openedMultiDict.TryGetValue(name, out var panels);
             if (!has) {
@@ -220,7 +220,7 @@ namespace MortiseFrame.Loom {
             }
         }
 
-        public int MultiplePanel_GetID<T>(T panel) where T : IPanel {
+        internal int MultiplePanel_GetID<T>(T panel) where T : IPanel {
             if (idDict.TryGetValue(panel, out var id)) {
                 return id;
             }
@@ -228,14 +228,14 @@ namespace MortiseFrame.Loom {
         }
         #endregion
 
-        public GameObject GetGameObject(IPanel panel) {
+        internal GameObject GetGameObject(IPanel panel) {
             if (goDict.TryGetValue(panel, out var go)) {
                 return go;
             }
             return null;
         }
 
-        public void Clear() {
+        internal void Clear() {
             openedUniqueDict.Clear();
             openedMultiDict.Clear();
             tempList.Clear();
