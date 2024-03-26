@@ -4,7 +4,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class Sample_WorldSpaceMultipleTimerPanel : MonoBehaviour, IPanel {
+    public class Sample_WorldSpaceMultipleTimerPanel : MonoBehaviour, IWorldPanel {
 
         [SerializeField] Text txt_timer;
         [SerializeField] Button btn_close;

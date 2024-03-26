@@ -66,7 +66,7 @@ namespace MortiseFrame.Loom.Sample {
         }
 
         // Navigation
-        public static void WorldSpaceNavigationPanel_OpenUnique(Sample_WorldSpaceUIContext ctx) {
+        public static void WorldSpaceNavigationPanel_OpenUnique(Sample_OverlayUIContext ctx) {
             var panel = ctx.UniquePanel_Open<Sample_WorldSpaceNavigationPanel>();
             panel.Ctor();
             panel.OnClickOpenUniqueHandle = ctx.Evt.OnOpenUniqueClickHandle;
@@ -76,7 +76,7 @@ namespace MortiseFrame.Loom.Sample {
             panel.OnCLickAllHandle = ctx.Evt.OnCloseAllClickHandle;
         }
 
-        public static void WorldSpaceNavigationPanel_Close(Sample_WorldSpaceUIContext ctx) {
+        public static void WorldSpaceNavigationPanel_Close(Sample_OverlayUIContext ctx) {
             ctx.UniquePanel_Close<Sample_WorldSpaceNavigationPanel>();
         }
 

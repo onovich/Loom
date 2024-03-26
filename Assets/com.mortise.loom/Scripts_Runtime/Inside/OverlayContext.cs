@@ -10,10 +10,6 @@ namespace MortiseFrame.Loom {
         Canvas overlayCanvas;
         public Canvas OverlayCanvas => overlayCanvas;
 
-        // World Fake Canvas
-        Transform worldSpaceFakeCanvas;
-        public Transform WorldSpaceFakeCanvas => worldSpaceFakeCanvas;
-
         // Prefab
         public Dictionary<string, GameObject> prefabDict;
 
@@ -52,10 +48,6 @@ namespace MortiseFrame.Loom {
 
         public void SetOverlayCanvas(Canvas mainCanvas) {
             this.overlayCanvas = mainCanvas;
-        }
-
-        public void SetWorldSpaceFakeCanvas(Transform worldFakeCanvas) {
-            this.worldSpaceFakeCanvas = worldFakeCanvas;
         }
 
         public void Asset_AddPrefab(string name, GameObject prefab) {

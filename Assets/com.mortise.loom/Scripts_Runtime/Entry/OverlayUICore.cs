@@ -5,14 +5,13 @@ using UnityEngine.AddressableAssets;
 
 namespace MortiseFrame.Loom {
 
-    public class UICore {
+    public class OverlayUICore {
 
         OverlayContext ctx;
 
-        public UICore(Canvas mainCanvas, Transform worldSpaceFakeCanvas = null, string assetsLabel = "UI") {
+        public OverlayUICore(Canvas mainCanvas, string assetsLabel) {
             ctx = new OverlayContext();
             ctx.SetOverlayCanvas(mainCanvas);
-            ctx.SetWorldSpaceFakeCanvas(worldSpaceFakeCanvas);
             ctx.AssetsLabel = assetsLabel;
         }
 

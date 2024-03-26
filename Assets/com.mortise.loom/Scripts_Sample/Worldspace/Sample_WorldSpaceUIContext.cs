@@ -7,12 +7,12 @@ namespace MortiseFrame.Loom.Sample {
 
     public class Sample_WorldSpaceUIContext {
 
-        UICore uiCore;
+        WorldSpaceUICore uiCore;
         Sample_WorldSpaceUIEventCenter evt;
         public Sample_WorldSpaceUIEventCenter Evt => evt;
 
         public Sample_WorldSpaceUIContext(Canvas mainCanvas, Transform worldSpaceFakeCanvas) {
-            uiCore = new UICore(mainCanvas, worldSpaceFakeCanvas);
+            uiCore = new WorldSpaceUICore(worldSpaceFakeCanvas, "WorldUI");
             evt = new Sample_WorldSpaceUIEventCenter();
         }
 
@@ -31,38 +31,37 @@ namespace MortiseFrame.Loom.Sample {
         }
 
         #region Unique Panel
-        public T UniquePanel_Open<T>() where T : IPanel {
-            LLog.Log("UniquePanel_Open");
+        public T UniquePanel_Open<T>() where T : IWorldPanel {
             return uiCore.UniquePanel_Open<T>();
         }
 
-        public T UniquePanel_Get<T>() where T : IPanel {
+        public T UniquePanel_Get<T>() where T : IWorldPanel {
             return uiCore.UniquePanel_Get<T>();
         }
 
-        public bool UniquePanel_TryGet<T>(out T panel) where T : IPanel {
+        public bool UniquePanel_TryGet<T>(out T panel) where T : IWorldPanel {
             return uiCore.UniquePanel_TryGet<T>(out panel);
         }
 
-        public void UniquePanel_Close<T>() where T : IPanel {
+        public void UniquePanel_Close<T>() where T : IWorldPanel {
             uiCore.UniquePanel_Close<T>();
         }
         #endregion
 
         #region  Multiple Panel
-        public T MultiplePanel_Open<T>() where T : IPanel {
+        public T MultiplePanel_Open<T>() where T : IWorldPanel {
             return uiCore.MultiplePanel_Open<T>();
         }
 
-        public void MultiplePanel_Close<T>(T panelInstance) where T : IPanel {
+        public void MultiplePanel_Close<T>(T panelInstance) where T : IWorldPanel {
             uiCore.MultiplePanel_Close<T>(panelInstance);
         }
 
-        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
+        public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IWorldPanel {
             uiCore.MultiplePanel_GroupForEach<T>(action);
         }
 
-        public void MultiplePanel_CloseGroup<T>() where T : IPanel {
+        public void MultiplePanel_CloseGroup<T>() where T : IWorldPanel {
             uiCore.MultiplePanel_CloseGroup<T>();
         }
         #endregion
