@@ -19,21 +19,6 @@ namespace MortiseFrame.Loom.Sample {
         public Action OnClickCloseMultiGroupHandle;
         public Action OnCLickAllHandle;
 
-        int id;
-        int IPanel.ID => id;
-        GameObject IPanel.GO => gameObject;
-
-        bool inWorldSpace;
-        public bool InWorldSpace => inWorldSpace;
-
-        public void SetInWorldSpace(bool value) {
-            inWorldSpace = value;
-        }
-
-        public void SetID(int id) {
-            this.id = id;
-        }
-
         public void Ctor() {
             btn_unique_open.onClick.AddListener(() => {
                 OnClickOpenUniqueHandle?.Invoke();

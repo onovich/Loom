@@ -62,7 +62,7 @@ namespace MortiseFrame.Loom.Sample {
                 Sample_WorldSpaceUIDomain.TimerPanel_OpenMulti(uiCtx);
             };
             evt.Timer_OnCloseClickMultiHandle = (panel) => {
-                Sample_WorldSpaceUIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_MultipleTimerPanel)panel);
+                Sample_WorldSpaceUIDomain.TimerPanel_CloseMulti(uiCtx, (Sample_WorldSpaceMultipleTimerPanel)panel);
             };
             evt.OnOpenUniqueClickHandle = () => {
                 Sample_WorldSpaceUIDomain.TimerPanel_OpenUnique(uiCtx);

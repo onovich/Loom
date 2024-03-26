@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public class UIContext {
+    public class OverlayContext {
 
         // Canvas
         Canvas overlayCanvas;
@@ -29,16 +29,20 @@ namespace MortiseFrame.Loom {
         public Dictionary<IPanel, int> idDict;
         public int idRecord;
 
+        // GO Dict
+        public Dictionary<IPanel, GameObject> goDict;
+
         // Const
         public string AssetsLabel;
 
-        public UIContext() {
+        public OverlayContext() {
             prefabDict = new Dictionary<string, GameObject>();
             openedUniqueDict = new Dictionary<string, IPanel>();
             openedMultiDict = new Dictionary<string, Dictionary<int, IPanel>>();
             idDict = new Dictionary<IPanel, int>();
             tempList = new List<IPanel>();
             intTempList = new List<int>();
+            goDict = new Dictionary<IPanel, GameObject>();
             idRecord = 0;
         }
 
@@ -59,11 +63,28 @@ namespace MortiseFrame.Loom {
         }
 
         #region Unique Panel
-        public void UniquePanel_Add(string name, IPanel com) {
-            openedUniqueDict.Add(name, com);
+        public void UniquePanel_Add(string name, IPanel panel) {
+            if (openedUniqueDict.ContainsKey(name)) {
+                LLog.Error($"Unique Panel Add Error: Already have Type = {name}; name = {name}");
+                return;
+            }
+
+            if (!(panel is MonoBehaviour go)) {
+                LLog.Error($"Unique Panel Add Error: Panel is not MonoBehaviour; name = {name}");
+                return;
+            }
+            if (panel is IPanel _panel) {
+                goDict.Add(_panel, go.gameObject);
+            }
+            openedUniqueDict.Add(name, panel);
         }
 
         public void UniquePanel_Remove(string name) {
+            if (!openedUniqueDict.TryGetValue(name, out var panel)) {
+                LLog.Error($"Unique Panel Remove Error: Not found Type = {name}; name = {name}");
+                return;
+            }
+            goDict.Remove(panel);
             openedUniqueDict.Remove(name);
         }
 
@@ -83,13 +104,26 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public void MultiplePanel_Add(string name, int id, IPanel com) {
-            idDict.Add(com, id);
+        public void MultiplePanel_Add(string name, int id, IPanel panel) {
+            if (!(panel is MonoBehaviour go)) {
+                LLog.Error($"Multiple Panel Add Error: Panel is not MonoBehaviour; name = {name}");
+                return;
+            }
+
+            if (panel is IPanel _panel) {
+                goDict.Add(_panel, go.gameObject);
+            }
+
+            if (idDict.ContainsKey(panel)) {
+                LLog.Error($"Multiple Panel Add Error: Already have Panel = {panel}; id = {id}; name = {name}");
+            }
+
+            idDict.Add(panel, id);
 
             if (!openedMultiDict.ContainsKey(name)) {
                 openedMultiDict[name] = new Dictionary<int, IPanel>();
             }
-            openedMultiDict[name].Add(id, com);
+            openedMultiDict[name].Add(id, panel);
         }
 
         public T MultiplePanel_Get<T>(int id) where T : IPanel {
@@ -142,6 +176,7 @@ namespace MortiseFrame.Loom {
                 if (panels.Count == 0) {
                     openedMultiDict.Remove(name);
                 }
+                goDict.Remove(panels[id]);
             }
         }
 
@@ -157,12 +192,27 @@ namespace MortiseFrame.Loom {
                 idDict.Remove(panel);
                 var id = kv.Key;
                 intTempList.Add(id);
+                goDict.Remove(panel);
             }
             foreach (var id in intTempList) {
                 panels.Remove(id);
             }
         }
+
+        public int MultiplePanel_GetID<T>(T panel) where T : IPanel {
+            if (idDict.TryGetValue(panel, out var id)) {
+                return id;
+            }
+            return -1;
+        }
         #endregion
+
+        public GameObject GetGameObject(IPanel panel) {
+            if (goDict.TryGetValue(panel, out var go)) {
+                return go;
+            }
+            return null;
+        }
 
         public void Clear() {
             openedUniqueDict.Clear();

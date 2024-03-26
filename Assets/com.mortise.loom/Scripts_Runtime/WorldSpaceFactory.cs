@@ -2,37 +2,35 @@ using UnityEngine;
 
 namespace MortiseFrame.Loom {
 
-    public static class UIFactory {
+    public static class WorldSpaceFactory {
 
         #region Unique Panel
-        public static T UniquePanel_Open<T>(UIContext ctx) where T : IPanel {
+        public static T UniquePanel_Open<T>(WorldSpaceContext ctx) where T : IWorldPanel {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
-            var panel = GameObject.Instantiate(prefab).GetComponent<T>();
+            var panel = GameObject.Instantiate(prefab, ctx.WorldSpaceFakeCanvas).GetComponent<T>();
             if (panel == null) {
                 LLog.Error($"UIFactory.UniquePanel_Open<{name}>: Panel is null");
                 return default;
             }
-            var inWorldSpace = panel.InWorldSpace;
-            var root = inWorldSpace ? ctx.WorldSpaceFakeCanvas : ctx.OverlayCanvas.transform;
-            panel.GO.transform.SetParent(root, false);
             ctx.UniquePanel_Add(name, panel);
             return panel;
         }
 
-        public static bool UniquePanel_TryClose<T>(UIContext ctx) where T : IPanel {
+        public static bool UniquePanel_TryClose<T>(WorldSpaceContext ctx) where T : IWorldPanel {
             string name = typeof(T).Name;
             bool has = ctx.UniquePanel_TryGet(name, out var panel);
             if (!has) {
                 return false;
             }
             ctx.UniquePanel_Remove(name);
-            GameObject.Destroy(panel.GO);
+            var go = ctx.GetGameObject(panel);
+            GameObject.Destroy(go);
             return true;
         }
 
-        static GameObject GetPrefab(UIContext ctx, string name) {
+        static GameObject GetPrefab(WorldSpaceContext ctx, string name) {
             bool has = ctx.prefabDict.TryGetValue(name, out var prefab);
             if (!has) {
                 LLog.Error($"UIFactory.GetPrefab<{name}>: UI Prefab not found");
@@ -43,22 +41,18 @@ namespace MortiseFrame.Loom {
         #endregion
 
         #region Multiple Panel
-        public static T MultiplePanel_Open<T>(UIContext ctx) where T : IPanel {
+        public static T MultiplePanel_Open<T>(WorldSpaceContext ctx) where T : IWorldPanel {
             var dict = ctx.prefabDict;
             string name = typeof(T).Name;
             var prefab = GetPrefab(ctx, name);
-            var panel = GameObject.Instantiate(prefab, ctx.OverlayCanvas.transform).GetComponent<T>();
+            var panel = GameObject.Instantiate(prefab, ctx.WorldSpaceFakeCanvas).GetComponent<T>();
             var id = ctx.PickID();
-            panel.SetID(id);
-            var inWorldSpace = panel.InWorldSpace;
-            var root = inWorldSpace ? ctx.WorldSpaceFakeCanvas : ctx.OverlayCanvas.transform;
-            panel.GO.transform.SetParent(root, false);
             ctx.MultiplePanel_Add(name, id, panel);
             return panel;
         }
 
-        public static bool MultiplePanel_TryClose<T>(UIContext ctx, T panelInstance) where T : IPanel {
-            var has = (ctx.idDict.TryGetValue(panelInstance, out var id));
+        public static bool MultiplePanel_TryClose<T>(WorldSpaceContext ctx, T panel) where T : IWorldPanel {
+            var has = (ctx.idDict.TryGetValue(panel, out var id));
             if (!has) {
                 LLog.Warning("MultiplePanel_TryClose: Panel not found in ID Dict");
                 return false;
@@ -69,16 +63,18 @@ namespace MortiseFrame.Loom {
                 return false;
             }
             ctx.MultiplePanel_Remove<T>(id);
-            GameObject.Destroy(panelInstance.GO);
+            var go = ctx.GetGameObject(panel);
+            GameObject.Destroy(go);
             return true;
         }
 
-        public static void MultiplePanel_CloseGroup<T>(UIContext ctx) where T : IPanel {
+        public static void MultiplePanel_CloseGroup<T>(WorldSpaceContext ctx) where T : IWorldPanel {
             var group = ctx.MultiplePanel_GetGroup<T>();
             ctx.MultiplePanel_RemoveGroup<T>();
 
             foreach (var panel in group) {
-                GameObject.Destroy(panel.GO);
+                var go = ctx.GetGameObject(panel);
+                GameObject.Destroy(go);
             }
         }
         #endregion

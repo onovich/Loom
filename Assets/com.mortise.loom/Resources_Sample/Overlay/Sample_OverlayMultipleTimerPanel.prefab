@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 6811967180003159801}
   - component: {fileID: 7576379093409269247}
   m_Layer: 5
-  m_Name: Sample_MultipleTimerPanel
+  m_Name: Sample_OverlayMultipleTimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

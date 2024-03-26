@@ -4,7 +4,7 @@ using System;
 
 namespace MortiseFrame.Loom.Sample {
 
-    public class Sample_MultipleTimerPanel : MonoBehaviour, IPanel {
+    public class Sample_OverlayMultipleTimerPanel : MonoBehaviour, IPanel {
 
         [SerializeField] Text txt_timer;
         [SerializeField] Button btn_close;
@@ -12,21 +12,6 @@ namespace MortiseFrame.Loom.Sample {
 
         public Action<MonoBehaviour> OnClickCloseHandle;
         public Action OnClickResetHandle;
-
-        int id;
-        public int ID => id;
-        GameObject IPanel.GO => gameObject;
-
-        bool inWorldSpace;
-        public bool InWorldSpace => inWorldSpace;
-
-        public void SetInWorldSpace(bool value) {
-            inWorldSpace = value;
-        }
-
-        public void SetID(int id) {
-            this.id = id;
-        }
 
         public void Ctor() {
             btn_close.onClick.AddListener(() => {

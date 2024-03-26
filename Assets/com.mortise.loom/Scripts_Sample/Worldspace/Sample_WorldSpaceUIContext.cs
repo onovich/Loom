@@ -32,6 +32,7 @@ namespace MortiseFrame.Loom.Sample {
 
         #region Unique Panel
         public T UniquePanel_Open<T>() where T : IPanel {
+            LLog.Log("UniquePanel_Open");
             return uiCore.UniquePanel_Open<T>();
         }
 

@@ -7,10 +7,10 @@ namespace MortiseFrame.Loom {
 
     public class UICore {
 
-        UIContext ctx;
+        OverlayContext ctx;
 
         public UICore(Canvas mainCanvas, Transform worldSpaceFakeCanvas = null, string assetsLabel = "UI") {
-            ctx = new UIContext();
+            ctx = new OverlayContext();
             ctx.SetOverlayCanvas(mainCanvas);
             ctx.SetWorldSpaceFakeCanvas(worldSpaceFakeCanvas);
             ctx.AssetsLabel = assetsLabel;
@@ -41,7 +41,7 @@ namespace MortiseFrame.Loom {
             if (panel != null) {
                 return (T)panel;
             }
-            return UIFactory.UniquePanel_Open<T>(ctx);
+            return OverlayFactory.UniquePanel_Open<T>(ctx);
         }
 
         public T UniquePanel_Get<T>() where T : IPanel {
@@ -57,17 +57,17 @@ namespace MortiseFrame.Loom {
         }
 
         public void UniquePanel_Close<T>() where T : IPanel {
-            UIFactory.UniquePanel_TryClose<T>(ctx);
+            OverlayFactory.UniquePanel_TryClose<T>(ctx);
         }
         #endregion
 
         #region  Multiple Panel
         public T MultiplePanel_Open<T>() where T : IPanel {
-            return UIFactory.MultiplePanel_Open<T>(ctx);
+            return OverlayFactory.MultiplePanel_Open<T>(ctx);
         }
 
         public void MultiplePanel_Close<T>(T panelInstance) where T : IPanel {
-            UIFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
+            OverlayFactory.MultiplePanel_TryClose<T>(ctx, panelInstance);
         }
 
         public void MultiplePanel_GroupForEach<T>(Action<T> action) where T : IPanel {
@@ -79,7 +79,7 @@ namespace MortiseFrame.Loom {
         }
 
         public void MultiplePanel_CloseGroup<T>() where T : IPanel {
-            UIFactory.MultiplePanel_CloseGroup<T>(ctx);
+            OverlayFactory.MultiplePanel_CloseGroup<T>(ctx);
         }
         #endregion
 
