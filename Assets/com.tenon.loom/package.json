@@ -1,0 +1,19 @@
+{
+    "name": "com.tenon.loom",
+    "version": "0.1.0",
+    "unity": "2019.4",
+    "author": {
+        "name": "onovich",
+        "email": "onovich1110@gmail.com"
+    },
+    "displayName": "TenonKit.Loom",
+    "description": "A Game UI Scaffold.",
+    "documentationURL": "https://github.com/onovich/Loom",
+    "hideInEditor": false,
+    "category": "UI",
+    "keywords": [
+        "TenonKit",
+        "ui"
+    ],
+    "unityRelease": "16f1"
+}
