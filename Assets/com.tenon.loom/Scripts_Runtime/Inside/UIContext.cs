@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace TenonKit.Loom {
 
@@ -33,6 +34,7 @@ namespace TenonKit.Loom {
 
         // Prefab
         internal Dictionary<string, GameObject> prefabDict;
+        internal AsyncOperationHandle prefabHandle;
 
         // Const
         internal string AssetsLabel;
@@ -238,9 +240,12 @@ namespace TenonKit.Loom {
         internal void Clear() {
             openedUniqueDict.Clear();
             openedMultiDict.Clear();
+            idDict.Clear();
             tempList.Clear();
             intTempList.Clear();
-            idDict.Clear();
+            goDict.Clear();
+            prefabDict.Clear();
+            idRecord = 0;
         }
 
     }

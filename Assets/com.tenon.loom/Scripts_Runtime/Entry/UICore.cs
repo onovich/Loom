@@ -27,13 +27,23 @@ namespace TenonKit.Loom {
         public async Task LoadAssets() {
             try {
                 var lable = ctx.AssetsLabel;
-                var list = await Addressables.LoadAssetsAsync<GameObject>(lable, null).Task;
+                var handle = Addressables.LoadAssetsAsync<GameObject>(lable, null);
+                var list = await handle.Task;
                 foreach (var prefab in list) {
                     ctx.Asset_AddPrefab(prefab.name, prefab);
                 }
-            } catch (Exception e) {
+                ctx.prefabHandle = handle;
+        } catch (Exception e) {
                 LLog.Error(e.ToString());
             }
+        }
+
+        // Release
+        public void TearDown() {
+            if (ctx.prefabHandle.IsValid()) {
+                Addressables.Release(ctx.prefabHandle);
+            }
+            ctx.Clear();
         }
 
         // Tick
