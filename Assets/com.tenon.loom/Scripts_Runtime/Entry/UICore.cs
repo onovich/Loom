@@ -39,10 +39,13 @@ namespace TenonKit.Loom {
         }
 
         // Release
-        public void TearDown() {
+        public void ReleaseAssets() {
             if (ctx.prefabHandle.IsValid()) {
                 Addressables.Release(ctx.prefabHandle);
             }
+        }
+
+        public void TearDown() {
             ctx.Clear();
         }
 
